@@ -50,6 +50,9 @@ let g:neocomplcache_enable_smart_case = 1
 let g:neocomplcache_enable_underbar_completion = 1
  
 let g:neocomplcache_enable_camel_case_completion  =  1
+
+" 最初の補完候補を選択状態にする
+let g:neocomplcache_enable_auto_select = 1
  
 " ポップアップメニューで表示される候補の数
 let g:neocomplcache_max_list = 20
@@ -80,7 +83,7 @@ inoremap <expr><C-g> neocomplcache#undo_completion()
 inoremap <expr><C-l> neocomplcache#complete_common_string()
  
 " 改行で補完ウィンドウを閉じる
-inoremap <expr><CR> neocomplcache#smart_close_popup() . "\<CR>"
+" inoremap <expr><CR> neocomplcache#smart_close_popup() . "\<CR>"
  
 "tabで補完候補の選択を行う
 inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
@@ -91,6 +94,14 @@ inoremap <expr><C-h> neocomplcache#smart_close_popup().”\<C-h>”
  
 " 現在選択している候補を確定します
 inoremap <expr><C-y> neocomplcache#close_popup()
+" inoremap <expr><C-CR> neocomplcache#close_popup()
  
 " 現在選択している候補をキャンセルし、ポップアップを閉じます
 inoremap <expr><C-e> neocomplcache#cancel_popup()
+
+augroup MyXML
+  autocmd!
+  autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
+  autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
+augroup END
+
