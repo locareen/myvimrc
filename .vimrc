@@ -1,4 +1,7 @@
+let g:hybrid_use_Xresources = 1
+colorscheme hybrid
 syntax on
+
 set encoding=utf-8
 set fileencodings=euc-jp
 
@@ -35,6 +38,9 @@ map! <C-a> <Esc>^a
 
 map <C-e> <Esc>$a
 map <C-a> <Esc>^a
+
+noremap <C-p> "0p
+noremap x "_x
 
 
 " 補完ウィンドウの設定
@@ -104,4 +110,5 @@ augroup MyXML
   autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
   autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
 augroup END
+
 
