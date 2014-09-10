@@ -26,7 +26,7 @@ NeoBundle 'Shougo/neocomplcache'
 
 call neobundle#end()
 " Required:
-filetype plugin indent on
+filetype plugin on
 
 "autocmd FileType php :set dictionary=~/.vim/dict/php.dict
 highlight Pmenu ctermbg=4
