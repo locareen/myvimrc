@@ -2,9 +2,6 @@ let g:hybrid_use_Xresources = 1
 colorscheme hybrid
 syntax on
 
-set encoding=utf-8
-set fileencodings=euc-jp
-
 set wildmenu wildmode=list:full
 
 if has('vim_starting')
@@ -43,30 +40,30 @@ noremap <C-p> "0p
 noremap x "_x
 
 
-" Êä´°¥¦¥£¥ó¥É¥¦¤ÎÀßÄê
+" è£œå®Œã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¨­å®š
 set completeopt=menuone
  
-" µ¯Æ°»ş¤ËÍ­¸ú²½
+" èµ·å‹•æ™‚ã«æœ‰åŠ¹åŒ–
 let g:neocomplcache_enable_at_startup = 1
  
-" ÂçÊ¸»ú¤¬ÆşÎÏ¤µ¤ì¤ë¤Ş¤ÇÂçÊ¸»ú¾®Ê¸»ú¤Î¶èÊÌ¤òÌµ»ë¤¹¤ë
+" å¤§æ–‡å­—ãŒå…¥åŠ›ã•ã‚Œã‚‹ã¾ã§å¤§æ–‡å­—å°æ–‡å­—ã®åŒºåˆ¥ã‚’ç„¡è¦–ã™ã‚‹
 let g:neocomplcache_enable_smart_case = 1
  
-" _(¥¢¥ó¥À¡¼¥¹¥³¥¢)¶èÀÚ¤ê¤ÎÊä´°¤òÍ­¸ú²½
+" _(ã‚¢ãƒ³ãƒ€ãƒ¼ã‚¹ã‚³ã‚¢)åŒºåˆ‡ã‚Šã®è£œå®Œã‚’æœ‰åŠ¹åŒ–
 let g:neocomplcache_enable_underbar_completion = 1
  
 let g:neocomplcache_enable_camel_case_completion  =  1
 
-" ºÇ½é¤ÎÊä´°¸õÊä¤òÁªÂò¾õÂÖ¤Ë¤¹¤ë
+" æœ€åˆã®è£œå®Œå€™è£œã‚’é¸æŠçŠ¶æ…‹ã«ã™ã‚‹
 let g:neocomplcache_enable_auto_select = 1
  
-" ¥İ¥Ã¥×¥¢¥Ã¥×¥á¥Ë¥å¡¼¤ÇÉ½¼¨¤µ¤ì¤ë¸õÊä¤Î¿ô
+" ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã§è¡¨ç¤ºã•ã‚Œã‚‹å€™è£œã®æ•°
 let g:neocomplcache_max_list = 20
  
-" ¥·¥ó¥¿¥Ã¥¯¥¹¤ò¥­¥ã¥Ã¥·¥å¤¹¤ë¤È¤­¤ÎºÇ¾®Ê¸»úÄ¹
+" ã‚·ãƒ³ã‚¿ãƒƒã‚¯ã‚¹ã‚’ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã™ã‚‹ã¨ãã®æœ€å°æ–‡å­—é•·
 let g:neocomplcache_min_syntax_length = 3
  
-" ¥Ç¥£¥¯¥·¥ç¥Ê¥êÄêµÁ
+" ãƒ‡ã‚£ã‚¯ã‚·ãƒ§ãƒŠãƒªå®šç¾©
 let g:neocomplcache_dictionary_filetype_lists = {
     \ 'default' : '',
     \ 'php' : $HOME . '/.vim/dict/php.dict',
@@ -78,31 +75,31 @@ if !exists('g:neocomplcache_keyword_patterns')
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
  
-" ¥¹¥Ë¥Ú¥Ã¥È¤òÅ¸³«¤¹¤ë¡£¥¹¥Ë¥Ú¥Ã¥È¤¬´Ø·¸¤·¤Ê¤¤¤È¤³¤í¤Ç¤Ï¹ÔËö¤Ş¤Çºï½ü
+" ã‚¹ãƒ‹ãƒšãƒƒãƒˆã‚’å±•é–‹ã™ã‚‹ã€‚ã‚¹ãƒ‹ãƒšãƒƒãƒˆãŒé–¢ä¿‚ã—ãªã„ã¨ã“ã‚ã§ã¯è¡Œæœ«ã¾ã§å‰Šé™¤
 imap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
 smap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
  
-" Á°²ó¹Ô¤ï¤ì¤¿Êä´°¤ò¥­¥ã¥ó¥»¥ë¤·¤Ş¤¹
+" å‰å›è¡Œã‚ã‚ŒãŸè£œå®Œã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ã¾ã™
 inoremap <expr><C-g> neocomplcache#undo_completion()
  
-" Êä´°¸õÊä¤Î¤Ê¤«¤«¤é¡¢¶¦ÄÌ¤¹¤ëÉôÊ¬¤òÊä´°¤·¤Ş¤¹
+" è£œå®Œå€™è£œã®ãªã‹ã‹ã‚‰ã€å…±é€šã™ã‚‹éƒ¨åˆ†ã‚’è£œå®Œã—ã¾ã™
 inoremap <expr><C-l> neocomplcache#complete_common_string()
  
-" ²ş¹Ô¤ÇÊä´°¥¦¥£¥ó¥É¥¦¤òÊÄ¤¸¤ë
+" æ”¹è¡Œã§è£œå®Œã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹
 " inoremap <expr><CR> neocomplcache#smart_close_popup() . "\<CR>"
  
-"tab¤ÇÊä´°¸õÊä¤ÎÁªÂò¤ò¹Ô¤¦
+"tabã§è£œå®Œå€™è£œã®é¸æŠã‚’è¡Œã†
 inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
  
-" <C-h>¤ä<BS>¤ò²¡¤·¤¿¤È¤­¤Ë³Î¼Â¤Ë¥İ¥Ã¥×¥¢¥Ã¥×¤òºï½ü¤·¤Ş¤¹
-inoremap <expr><C-h> neocomplcache#smart_close_popup().¡É\<C-h>¡É
+" <C-h>ã‚„<BS>ã‚’æŠ¼ã—ãŸã¨ãã«ç¢ºå®Ÿã«ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã‚’å‰Šé™¤ã—ã¾ã™
+inoremap <expr><C-h> neocomplcache#smart_close_popup().â€\<C-h>â€
  
-" ¸½ºßÁªÂò¤·¤Æ¤¤¤ë¸õÊä¤ò³ÎÄê¤·¤Ş¤¹
+" ç¾åœ¨é¸æŠã—ã¦ã„ã‚‹å€™è£œã‚’ç¢ºå®šã—ã¾ã™
 inoremap <expr><C-y> neocomplcache#close_popup()
 " inoremap <expr><C-CR> neocomplcache#close_popup()
  
-" ¸½ºßÁªÂò¤·¤Æ¤¤¤ë¸õÊä¤ò¥­¥ã¥ó¥»¥ë¤·¡¢¥İ¥Ã¥×¥¢¥Ã¥×¤òÊÄ¤¸¤Ş¤¹
+" ç¾åœ¨é¸æŠã—ã¦ã„ã‚‹å€™è£œã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ã€ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã‚’é–‰ã˜ã¾ã™
 inoremap <expr><C-e> neocomplcache#cancel_popup()
 
 augroup MyXML
