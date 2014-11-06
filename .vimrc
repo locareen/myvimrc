@@ -108,4 +108,6 @@ augroup MyXML
   autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
 augroup END
 
-
+inoremap {<Enter> {}<Left><CR><ESC><S-o>
+inoremap [<Enter> []<Left><CR><ESC><S-o>
+inoremap (<Enter> ()<Left><CR><ESC><S-o>
