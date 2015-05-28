@@ -1,6 +1,8 @@
 let g:hybrid_use_Xresources = 1
 syntax on
 
+" set encoding=utf-8
+" set fileencodings=euc-jp
 set hlsearch
 set ruler
 set noswapfile
@@ -26,14 +28,15 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " ==========================================
 "My Bundles Plugin
 NeoBundle 'Shougo/neocomplcache'
-" ¥Ó¥¸¥å¥¢¥ë¥â¡¼¥É¤ÇÁªÂò¤·¤¿ÈÏ°Ï¤ò*¤Ç¸¡º÷¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
-NeoBundle 'nelstrom/vim-visual-star-search'
-" ¥Ç¥£¥ì¥¯¥È¥ê¤ò¥Ä¥ê¡¼É½¼¨¤Ç¤­¤ë
-NeoBundle 'scrooloose/nerdtree'
-"
-NeoBundle 'Shougo/unite.vim'
-
+NeoBundle 'nelstrom/vim-visual-star-search' " ãƒ“ã‚¸ãƒ¥ã‚¢ãƒ«ãƒ¢ãƒ¼ãƒ‰ã§é¸æŠã—ãŸç¯„å›²ã‚’*ã§æ¤œç´¢ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
+NeoBundle 'scrooloose/nerdtree'  " ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚’ãƒ„ãƒªãƒ¼è¡¨ç¤ºã§ãã‚‹
+NeoBundle 'Shougo/unite.vim'     " ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã®ãŒä¾¿åˆ©ã«ãªã‚‹
+NeoBundle 'Shougo/neomru.vim'    " unite.vimã§æœ€è¿‘ä½¿ã£ãŸãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ãã®ã«å¿…è¦
+NeoBundle 'tpope/vim-endwise'    " Rubyå‘ã‘ã«endã‚’è‡ªå‹•æŒ¿å…¥
 NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'soramugi/auto-ctags.vim' " ctagsã‚’ä½¿ã£ãŸã‚¿ã‚°ã®è‡ªå‹•ç”Ÿæˆ
+NeoBundle 'mattn/emmet-vim' " html/cssã®å…¥åŠ›è£œåŠ©
+NeoBundle 'othree/html5.vim' " html5ã®ã‚·ãƒ³ã‚¿ãƒƒã‚¯ã‚¹ã‚«ãƒ©ãƒ¼on
 " =========================================
 
 call neobundle#end()
@@ -47,66 +50,69 @@ highlight Pmenu ctermbg=4
 highlight PmenuSel ctermbg=1
 highlight PMenuSbar ctermbg=4
 
-" Êä´°¥¦¥£¥ó¥É¥¦¤ÎÀßÄê
+" è£œå®Œã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã®è¨­å®š
 set completeopt=menuone
+
+" auto-ctagsã‚’ä½¿ã£ã¦ãƒ•ã‚¡ã‚¤ãƒ«ä¿å­˜æ™‚ã«tagsãƒ•ã‚¡ã‚¤ãƒ«ã‚’æ›´æ–°
+let g:auto_ctags = 1
  
-" µ¯Æ°»ş¤ËÍ­¸ú²½
+" èµ·å‹•æ™‚ã«æœ‰åŠ¹åŒ–
 let g:neocomplcache_enable_at_startup = 1
  
-" ÂçÊ¸»ú¤¬ÆşÎÏ¤µ¤ì¤ë¤Ş¤ÇÂçÊ¸»ú¾®Ê¸»ú¤Î¶èÊÌ¤òÌµ»ë¤¹¤ë
+" å¤§æ–‡å­—ãŒå…¥åŠ›ã•ã‚Œã‚‹ã¾ã§å¤§æ–‡å­—å°æ–‡å­—ã®åŒºåˆ¥ã‚’ç„¡è¦–ã™ã‚‹
 let g:neocomplcache_enable_smart_case = 1
  
-" _(¥¢¥ó¥À¡¼¥¹¥³¥¢)¶èÀÚ¤ê¤ÎÊä´°¤òÍ­¸ú²½
+" _(ã‚¢ãƒ³ãƒ€ãƒ¼ã‚¹ã‚³ã‚¢)åŒºåˆ‡ã‚Šã®è£œå®Œã‚’æœ‰åŠ¹åŒ–
 let g:neocomplcache_enable_underbar_completion = 1
  
 let g:neocomplcache_enable_camel_case_completion  =  1
 
-" ºÇ½é¤ÎÊä´°¸õÊä¤òÁªÂò¾õÂÖ¤Ë¤¹¤ë
+" æœ€åˆã®è£œå®Œå€™è£œã‚’é¸æŠçŠ¶æ…‹ã«ã™ã‚‹
 let g:neocomplcache_enable_auto_select = 1
  
-" ¥İ¥Ã¥×¥¢¥Ã¥×¥á¥Ë¥å¡¼¤ÇÉ½¼¨¤µ¤ì¤ë¸õÊä¤Î¿ô
+" ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã§è¡¨ç¤ºã•ã‚Œã‚‹å€™è£œã®æ•°
 let g:neocomplcache_max_list = 20
  
-" ¥·¥ó¥¿¥Ã¥¯¥¹¤ò¥­¥ã¥Ã¥·¥å¤¹¤ë¤È¤­¤ÎºÇ¾®Ê¸»úÄ¹
+" ã‚·ãƒ³ã‚¿ãƒƒã‚¯ã‚¹ã‚’ã‚­ãƒ£ãƒƒã‚·ãƒ¥ã™ã‚‹ã¨ãã®æœ€å°æ–‡å­—é•·
 let g:neocomplcache_min_syntax_length = 3
  
-" ¥Ç¥£¥¯¥·¥ç¥Ê¥êÄêµÁ
-let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default' : '',
-    \ 'php' : $HOME . '/.vim/dict/php.dict',
-    \ 'ctp' : $HOME . '/.vim/dict/php.dict'
-    \ }
+" phpç”¨ãªã®ã§ã„ã£ãŸã‚“å¤–ã™ãƒ‡ã‚£ã‚¯ã‚·ãƒ§ãƒŠãƒªå®šç¾©
+"let g:neocomplcache_dictionary_filetype_lists = {
+"    \ 'default' : '',
+"    \ 'php' : $HOME . '/.vim/dict/php.dict',
+"    \ 'ctp' : $HOME . '/.vim/dict/php.dict'
+"    \ }
  
 if !exists('g:neocomplcache_keyword_patterns')
         let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
  
-" ¥¹¥Ë¥Ú¥Ã¥È¤òÅ¸³«¤¹¤ë¡£¥¹¥Ë¥Ú¥Ã¥È¤¬´Ø·¸¤·¤Ê¤¤¤È¤³¤í¤Ç¤Ï¹ÔËö¤Ş¤Çºï½ü
+" ã‚¹ãƒ‹ãƒšãƒƒãƒˆã‚’å±•é–‹ã™ã‚‹ã€‚ã‚¹ãƒ‹ãƒšãƒƒãƒˆãŒé–¢ä¿‚ã—ãªã„ã¨ã“ã‚ã§ã¯è¡Œæœ«ã¾ã§å‰Šé™¤
 imap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
 smap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
  
-" Á°²ó¹Ô¤ï¤ì¤¿Êä´°¤ò¥­¥ã¥ó¥»¥ë¤·¤Ş¤¹
+" å‰å›è¡Œã‚ã‚ŒãŸè£œå®Œã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ã¾ã™
 inoremap <expr><C-g> neocomplcache#undo_completion()
  
-" Êä´°¸õÊä¤Î¤Ê¤«¤«¤é¡¢¶¦ÄÌ¤¹¤ëÉôÊ¬¤òÊä´°¤·¤Ş¤¹
+" è£œå®Œå€™è£œã®ãªã‹ã‹ã‚‰ã€å…±é€šã™ã‚‹éƒ¨åˆ†ã‚’è£œå®Œã—ã¾ã™
 inoremap <expr><C-l> neocomplcache#complete_common_string()
  
-" ²ş¹Ô¤ÇÊä´°¥¦¥£¥ó¥É¥¦¤òÊÄ¤¸¤ë
+" æ”¹è¡Œã§è£œå®Œã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã‚‹
 " inoremap <expr><CR> neocomplcache#smart_close_popup() . "\<CR>"
  
-"tab¤ÇÊä´°¸õÊä¤ÎÁªÂò¤ò¹Ô¤¦
+"tabã§è£œå®Œå€™è£œã®é¸æŠã‚’è¡Œã†
 inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
  
-" <C-h>¤ä<BS>¤ò²¡¤·¤¿¤È¤­¤Ë³Î¼Â¤Ë¥İ¥Ã¥×¥¢¥Ã¥×¤òºï½ü¤·¤Ş¤¹
-inoremap <expr><C-h> neocomplcache#smart_close_popup().¡É\<C-h>¡É
+" <C-h>ã‚„<BS>ã‚’æŠ¼ã—ãŸã¨ãã«ç¢ºå®Ÿã«ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã‚’å‰Šé™¤ã—ã¾ã™
+inoremap <expr><C-h> neocomplcache#smart_close_popup().â€\<C-h>â€
  
-" ¸½ºßÁªÂò¤·¤Æ¤¤¤ë¸õÊä¤ò³ÎÄê¤·¤Ş¤¹
+" ç¾åœ¨é¸æŠã—ã¦ã„ã‚‹å€™è£œã‚’ç¢ºå®šã—ã¾ã™
 inoremap <expr><C-y> neocomplcache#close_popup()
 " inoremap <expr><C-CR> neocomplcache#close_popup()
  
-" ¸½ºßÁªÂò¤·¤Æ¤¤¤ë¸õÊä¤ò¥­¥ã¥ó¥»¥ë¤·¡¢¥İ¥Ã¥×¥¢¥Ã¥×¤òÊÄ¤¸¤Ş¤¹
+" ç¾åœ¨é¸æŠã—ã¦ã„ã‚‹å€™è£œã‚’ã‚­ãƒ£ãƒ³ã‚»ãƒ«ã—ã€ãƒãƒƒãƒ—ã‚¢ãƒƒãƒ—ã‚’é–‰ã˜ã¾ã™
 inoremap <expr><C-e> neocomplcache#cancel_popup()
 
 augroup MyXML
@@ -115,30 +121,47 @@ augroup MyXML
   autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
 augroup END
 
-" ³ç¸Ì¤ÎÊİ´É
+" æ‹¬å¼§ã®ä¿ç®¡
 inoremap {<Enter> {}<Left><CR><ESC><S-o>
 inoremap [<Enter> []<Left><CR><ESC><S-o>
 inoremap (<Enter> ()<Left><CR><ESC><S-o>
 
-" ¥³¥Ş¥ó¥É¥â¡¼¥É¤Ç¸½ºß³«¤¤¤Æ¤¤¤ë¥Õ¥¡¥¤¥ë¤Î¥Ñ¥¹¤ò¡Ö%%¡×¤ÇÉ½¼¨
+" ã‚³ãƒãƒ³ãƒ‰ãƒ¢ãƒ¼ãƒ‰ã§ç¾åœ¨é–‹ã„ã¦ã„ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ã®ãƒ‘ã‚¹ã‚’ã€Œ%%ã€ã§è¡¨ç¤º
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h') . '/' : '%%'
 
-" Ê£¿ô¹Ô¤òÁªÂò¤·¤ÆÏ¢Â³¤·¤Æ¥¤¥ó¥Ç¥ó¥È¤Ç¤­¤ë¤è¤¦¤Ë¤¹¤ë
+" è¤‡æ•°è¡Œã‚’é¸æŠã—ã¦é€£ç¶šã—ã¦ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
 vnoremap > >gv
 vnoremap < <gv
 
-" NERDTree¤ò³«¤¯
+" NERDTreeã‚’é–‹ã
 nnoremap :tree :NERDTreeToggle
 
+" å…¥åŠ›ãƒ¢ãƒ¼ãƒ‰ã§è¡Œã®å…ˆé ­ã¨æœ€å¾Œã«ç§»å‹•ã™ã‚‹ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆ
 inoremap <C-e> <Esc>$a
 inoremap <C-a> <Esc>^a
-
 map <C-e> <Esc>$a
 map <C-a> <Esc>^a
 
-" ¥ä¥ó¥¯¥ì¥¸¥¹¥¿¤«¤éÅ½ÉÕ¤±
+" ãƒ¤ãƒ³ã‚¯ãƒ¬ã‚¸ã‚¹ã‚¿ã‹ã‚‰è²¼ä»˜ã‘
 noremap PP "0p
 noremap x "_x
 
+" ===============================================================
+" unite.vimã®è¨­å®š
+noremap <C-U><C-F> :Unite -buffer-name=file file<CR> " ãƒ•ã‚¡ã‚¤ãƒ«ä¸€è¦§
+noremap <C-U><C-R> :Unite file_mru<CR> " æœ€è¿‘ä½¿ã£ãŸãƒ•ã‚¡ã‚¤ãƒ«ä¸€è¦§
 
+au FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('split') " ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’åˆ†å‰²ã—ã¦é–‹ã
+au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('split')
 
+" ESCã‚­ãƒ¼ã‚’2å›æŠ¼ã™ã¨çµ‚äº†ã™ã‚‹
+au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
+au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
+" ===============================================================
+"
+" emmetã®è¨­å®š
+let g:user_emmet_expandabbr_key = '<C-y><C-y>'
+let g:user_emmet_settings = {
+\  'indentation':'  '
+\}
+" ===============================================================
