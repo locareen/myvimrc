@@ -18,6 +18,12 @@ if has('vim_starting')
    set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
+" オートインデント設定
+:set tabstop=2
+:set autoindent
+:set expandtab
+:set shiftwidth=2
+
 "Required:
 call neobundle#begin(expand('~/.vim/bundle/'))
 
@@ -32,6 +38,7 @@ NeoBundle 'nelstrom/vim-visual-star-search' " ビジュアルモードで選択�
 NeoBundle 'scrooloose/nerdtree'  " ディレクトリをツリー表示できる
 NeoBundle 'Shougo/unite.vim'     " ファイルを開くのが便利になる
 NeoBundle 'Shougo/neomru.vim'    " unite.vimで最近使ったファイルを開くのに必要
+NeoBundle "git://github.com/tsukkee/unite-tag.git" " ctgasの内容をunite.vimを使って開く
 NeoBundle 'tpope/vim-endwise'    " Ruby向けにendを自動挿入
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'soramugi/auto-ctags.vim' " ctagsを使ったタグの自動生成
@@ -146,6 +153,9 @@ map <C-a> <Esc>^a
 noremap PP "0p
 noremap x "_x
 
+" tagsジャンプの時に複数ある時は一覧表示
+nnoremap <C-]> g<C-]>
+
 " ===============================================================
 " unite.vimの設定
 noremap <C-U><C-F> :Unite -buffer-name=file file<CR> " ファイル一覧
@@ -157,6 +167,12 @@ au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('split
 " ESCキーを2回押すと終了する
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
 au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
+
+" unite-tagsの設定
+autocmd BufEnter *
+\   if empty(&buftype)
+\|      nnoremap <buffer> <C-]> :<C-u>UniteWithCursorWord -immediately tag<CR>
+\|  endif
 " ===============================================================
 "
 " emmetの設定
