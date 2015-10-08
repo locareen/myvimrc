@@ -44,6 +44,8 @@ NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'soramugi/auto-ctags.vim' " ctagsを使ったタグの自動生成
 NeoBundle 'mattn/emmet-vim' " html/cssの入力補助
 NeoBundle 'othree/html5.vim' " html5のシンタックスカラーon
+NeoBundle 'kchmck/vim-coffee-script' " coffee scriptのシンタックスカラーon
+NeoBundle 'osyo-manga/vim-over' " ハイライト一括置換的なやつ
 " =========================================
 
 call neobundle#end()
