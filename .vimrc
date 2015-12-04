@@ -201,3 +201,19 @@ let g:user_emmet_settings = {
 \  'indentation':'  '
 \}
 " ===============================================================
+
+
+command! -nargs=1 Search call s:Search("<args>")
+function s:Search(word)
+  let s:filelist = glob("./**/". a:word . "*")
+  let s:splitted = split(s:filelist, "\n")
+  let s:result = []
+  new
+  for s:file in s:splitted
+    call append('.', s:file . "\r")
+    " call add(s:result, s:file)
+  endfor
+  "call setqflist(s:result, 'r')
+  "cwindow
+  " silent! doautocmd QuickFixCmdPost make
+endfunction
