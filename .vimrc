@@ -38,7 +38,7 @@ NeoBundle 'nelstrom/vim-visual-star-search' " ビジュアルモードで選択�
 NeoBundle 'scrooloose/nerdtree'  " ディレクトリをツリー表示できる
 NeoBundle 'Shougo/unite.vim'     " ファイルを開くのが便利になる
 NeoBundle 'Shougo/neomru.vim'    " unite.vimで最近使ったファイルを開くのに必要
-NeoBundle "git://github.com/tsukkee/unite-tag.git" " ctgasの内容をunite.vimを使って開く
+NeoBundle "tsukkee/unite-tag" " ctgasの内容をunite.vimを使って開く
 NeoBundle 'tpope/vim-endwise'    " Ruby向けにendを自動挿入
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'soramugi/auto-ctags.vim' " ctagsを使ったタグの自動生成
@@ -46,6 +46,10 @@ NeoBundle 'mattn/emmet-vim' " html/cssの入力補助
 NeoBundle 'othree/html5.vim' " html5のシンタックスカラーon
 NeoBundle 'kchmck/vim-coffee-script' " coffee scriptのシンタックスカラーon
 NeoBundle 'osyo-manga/vim-over' " ハイライト一括置換的なやつ
+" NeoBundle 'NigoroJr/rsense'
+NeoBundle 'marcus/rsense'
+NeoBundle 'supermomonga/neocomplete-rsense.vim' " , {
+"    \ 'autoload' : { 'insert' : 1, 'filetype' : 'ruby', } }
 " =========================================
 
 call neobundle#end()
@@ -61,6 +65,10 @@ highlight PMenuSbar ctermbg=4
 
 " 補完ウィンドウの設定
 set completeopt=menuone
+
+" rsenseでの自動補完機能を有効化
+let g:rsenseUseOmniFunc = 1
+" let g:rsenseHome = '/usr/local/lib/rsense-0.3'
 
 " auto-ctagsを使ってファイル保存時にtagsファイルを更新
 let g:auto_ctags = 1
@@ -84,7 +92,15 @@ let g:neocomplcache_max_list = 20
  
 " シンタックスをキャッシュするときの最小文字長
 let g:neocomplcache_min_syntax_length = 3
- 
+
+" 補完の設定
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.ruby = '[^.*\t]\.\w*\|\h\w*::'
+
+
 " php用なのでいったん外すディクショナリ定義
 "let g:neocomplcache_dictionary_filetype_lists = {
 "    \ 'default' : '',
@@ -157,6 +173,8 @@ noremap x "_x
 
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]>
+nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
+nnoremap <C-k> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
 
 " ===============================================================
 " unite.vimの設定
