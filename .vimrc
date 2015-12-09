@@ -8,6 +8,10 @@ set ruler
 set noswapfile
 set title
 set incsearch
+set autoread
+set ignorecase
+set smartcase
+set wrapscan
 
 set wildmenu wildmode=list:full
 
@@ -16,6 +20,12 @@ if has('vim_starting')
 
    "Required:
    set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+if !exists('loaded_matchit')
+  " matchitを有効化
+  " def〜end間を%で移動できる
+  runtime macros/matchit.vim
 endif
 
 " オートインデント設定
@@ -33,22 +43,28 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 " ==========================================
 "My Bundles Plugin
+"
+NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'w0ng/vim-hybrid'
+
+NeoBundle 'ykyk1218/vim-simple-search'
+
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'nelstrom/vim-visual-star-search' " ビジュアルモードで選択した範囲を*で検索できるようにする
 NeoBundle 'scrooloose/nerdtree'  " ディレクトリをツリー表示できる
 NeoBundle 'Shougo/unite.vim'     " ファイルを開くのが便利になる
+NeoBundle 'basyura/unite-rails'  " uniteでrailsプロジェクトのファイル移動
+NeoBundle "tsukkee/unite-tag"    " ctgasの内容をunite.vimを使って開く
 NeoBundle 'Shougo/neomru.vim'    " unite.vimで最近使ったファイルを開くのに必要
-NeoBundle "tsukkee/unite-tag" " ctgasの内容をunite.vimを使って開く
 NeoBundle 'tpope/vim-endwise'    " Ruby向けにendを自動挿入
-NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'soramugi/auto-ctags.vim' " ctagsを使ったタグの自動生成
-NeoBundle 'mattn/emmet-vim' " html/cssの入力補助
+NeoBundle 'mattn/emmet-vim'  " html/cssの入力補助
 NeoBundle 'othree/html5.vim' " html5のシンタックスカラーon
 NeoBundle 'kchmck/vim-coffee-script' " coffee scriptのシンタックスカラーon
 NeoBundle 'osyo-manga/vim-over' " ハイライト一括置換的なやつ
 " NeoBundle 'NigoroJr/rsense'
 NeoBundle 'marcus/rsense'
-NeoBundle 'supermomonga/neocomplete-rsense.vim' " , {
+NeoBundle 'supermomonga/neocompletecache-rsense.vim' " , {
 "    \ 'autoload' : { 'insert' : 1, 'filetype' : 'ruby', } }
 " =========================================
 
@@ -193,6 +209,19 @@ autocmd BufEnter *
 \   if empty(&buftype)
 \|      nnoremap <buffer> <C-]> :<C-u>UniteWithCursorWord -immediately tag<CR>
 \|  endif
+
+noremap :rc :<C-u>Unite rails/controller<CR>
+noremap :rm :<C-u>Unite rails/model<CR>
+noremap :rv :<C-u>Unite rails/view<CR>
+noremap :rh :<C-u>Unite rails/helper<CR>
+noremap :rs :<C-u>Unite rails/stylesheet<CR>
+noremap :rj :<C-u>Unite rails/javascript<CR>
+noremap :rr :<C-u>Unite rails/route<CR>
+noremap :rg :<C-u>Unite rails/gemfile<CR>
+noremap :rt :<C-u>Unite rails/spec<CR>
+
+noremap :ss :SimpleSearch 
+
 " ===============================================================
 "
 " emmetの設定
@@ -203,17 +232,14 @@ let g:user_emmet_settings = {
 " ===============================================================
 
 
-command! -nargs=1 Search call s:Search("<args>")
-function s:Search(word)
-  let s:filelist = glob("./**/". a:word . "*")
-  let s:splitted = split(s:filelist, "\n")
-  let s:result = []
-  new
-  for s:file in s:splitted
-    call append('.', s:file . "\r")
-    " call add(s:result, s:file)
-  endfor
-  "call setqflist(s:result, 'r')
-  "cwindow
-  " silent! doautocmd QuickFixCmdPost make
-endfunction
+"command! -nargs=1 ES call s:EasySearch("<args>")
+"function s:EasySearch(word)
+"  let s:filelist = glob("./**/". a:word . "*")
+"  let s:splitted = split(s:filelist, "\n")
+"  let s:result = []
+"  new
+"  for s:file in s:splitted
+"    call append('.', s:file . "\r")
+"  endfor
+"  nnoremap <silent> <buffer> <C-i> <C-w>f<C-w>p:q!<CR><C-w>w
+"endfunction
