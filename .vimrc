@@ -12,8 +12,10 @@ set autoread
 set ignorecase
 set smartcase
 set wrapscan
+set matchpairs+=<:>
 
 set wildmenu wildmode=list:full
+set clipboard+=unnamed,autoselect
 
 if has('vim_starting')
    set nocompatible      " Be iMproved
@@ -33,6 +35,8 @@ endif
 :set autoindent
 :set expandtab
 :set shiftwidth=2
+
+set whichwrap=b,s,<,>,[,]
 
 "Required:
 call neobundle#begin(expand('~/.vim/bundle/'))
@@ -56,15 +60,23 @@ NeoBundle 'Shougo/unite.vim'     " ファイルを開くのが便利になる
 NeoBundle 'basyura/unite-rails'  " uniteでrailsプロジェクトのファイル移動
 NeoBundle "tsukkee/unite-tag"    " ctgasの内容をunite.vimを使って開く
 NeoBundle 'Shougo/neomru.vim'    " unite.vimで最近使ったファイルを開くのに必要
+NeoBundle 'Shougo/neoyank.vim'   " unite.vimでヤンク履歴を表示する
 NeoBundle 'tpope/vim-endwise'    " Ruby向けにendを自動挿入
 NeoBundle 'soramugi/auto-ctags.vim' " ctagsを使ったタグの自動生成
 NeoBundle 'mattn/emmet-vim'  " html/cssの入力補助
 NeoBundle 'othree/html5.vim' " html5のシンタックスカラーon
 NeoBundle 'kchmck/vim-coffee-script' " coffee scriptのシンタックスカラーon
 NeoBundle 'osyo-manga/vim-over' " ハイライト一括置換的なやつ
+NeoBundle 'slim-template/vim-slim' " slimのシンタックスハイライト
+NeoBundle 'taglist.vim' " ctagsのリストが見れる
+NeoBundle 'tpope/vim-fugitive' " vimでgitコマンドが使える
+NeoBundle 'scrooloose/syntastic.git' " 文法チェック
+NeoBundle 'simeji/winresizer'
+NeoBundle 'TwitVim'
+
 " NeoBundle 'NigoroJr/rsense'
-NeoBundle 'marcus/rsense'
-NeoBundle 'supermomonga/neocompletecache-rsense.vim' " , {
+" NeoBundle 'marcus/rsense'
+" NeoBundle 'supermomonga/neocompletecache-rsense.vim' " , {
 "    \ 'autoload' : { 'insert' : 1, 'filetype' : 'ruby', } }
 " =========================================
 
@@ -72,12 +84,19 @@ call neobundle#end()
 " Required:
 filetype plugin on
 
-colorscheme hybrid
+colorscheme lucius
 
 "autocmd FileType php :set dictionary=~/.vim/dict/php.dict
-highlight Pmenu ctermbg=4
-highlight PmenuSel ctermbg=1
-highlight PMenuSbar ctermbg=4
+"highlight Pmenu ctermbg=4
+"highlight PmenuSel ctermbg=1
+"highlight PMenuSbar ctermbg=4
+"
+let twitvim_browser_cmd = 'open' " for Mac
+let twitvim_force_ssl = 1
+let twitvim_count = 40
+
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
+let g:syntastic_ruby_checkers = ['rubocop']
 
 " 補完ウィンドウの設定
 set completeopt=menuone
@@ -101,7 +120,7 @@ let g:neocomplcache_enable_underbar_completion = 1
 let g:neocomplcache_enable_camel_case_completion  =  1
 
 " 最初の補完候補を選択状態にする
-let g:neocomplcache_enable_auto_select = 1
+" let g:neocomplcache_enable_auto_select = 1
  
 " ポップアップメニューで表示される候補の数
 let g:neocomplcache_max_list = 20
@@ -177,25 +196,38 @@ vnoremap < <gv
 " NERDTreeを開く
 nnoremap :tree :NERDTreeToggle
 
+nnoremap :re :WinResizerStartResize
+let g:winresizer_start_key = '<C-C>'
+
 " 入力モードで行の先頭と最後に移動するショートカット
-inoremap <C-e> <Esc>$a
-inoremap <C-a> <Esc>^a
-map <C-e> <Esc>$a
-map <C-a> <Esc>^a
+imap <C-e> <Esc>$a
+" inoremap <C-a> <Esc>^a
+nmap <C-e> <Esc>$a
+" noremap <C-a> <Esc>^a
 
 " ヤンクレジスタから貼付け
-noremap PP "0p
+noremap __ "0p
 noremap x "_x
 
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]>
-nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
-nnoremap <C-k> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+nnoremap <C-{> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
+nnoremap <C-}> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+
+nnoremap TT :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR>
+
+" バッファ移動
+nnoremap <silent>BP :bprevious<CR>
+nnoremap <silent>BN :bnext<CR>
+nnoremap <silent>BB :b#<CR>
 
 " ===============================================================
 " unite.vimの設定
-noremap <C-U><C-F> :Unite -buffer-name=file file<CR> " ファイル一覧
-noremap <C-U><C-R> :Unite file_mru<CR> " 最近使ったファイル一覧
+let g:unite_source_history_yank_enable = 1
+noremap <C-U><C-F> :Unite -buffer-name=file file -start-insert<CR>
+" 最近使ったフィアル一覧
+noremap <C-U><C-R> :Unite file_mru<CR>
+noremap <C-U><C-Y> :Unite history/yank<CR>
 
 au FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('split') " ウィンドウを分割して開く
 au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('split')
@@ -231,6 +263,18 @@ let g:user_emmet_settings = {
 \}
 " ===============================================================
 
+:set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
+
+execute pathogen#infect()
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
 "command! -nargs=1 ES call s:EasySearch("<args>")
 "function s:EasySearch(word)
