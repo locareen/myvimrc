@@ -56,6 +56,7 @@ NeoBundle 'ykyk1218/vim-simple-search'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'nelstrom/vim-visual-star-search' " ビジュアルモードで選択した範囲を*で検索できるようにする
 NeoBundle 'scrooloose/nerdtree'  " ディレクトリをツリー表示できる
+NeoBundle 'jistr/vim-nerdtree-tabs' " nerdtreeを全てのタブで同じものを使えるようになる
 NeoBundle 'Shougo/unite.vim'     " ファイルを開くのが便利になる
 NeoBundle 'basyura/unite-rails'  " uniteでrailsプロジェクトのファイル移動
 NeoBundle "tsukkee/unite-tag"    " ctgasの内容をunite.vimを使って開く
@@ -106,7 +107,8 @@ let g:rsenseUseOmniFunc = 1
 " let g:rsenseHome = '/usr/local/lib/rsense-0.3'
 
 " auto-ctagsを使ってファイル保存時にtagsファイルを更新
-let g:auto_ctags = 1
+" 生成されるファイルがなんかおかしいのでコメントアウト
+" let g:auto_ctags = 1
  
 " 起動時に有効化
 let g:neocomplcache_enable_at_startup = 1
@@ -194,7 +196,7 @@ vnoremap > >gv
 vnoremap < <gv
 
 " NERDTreeを開く
-nnoremap :tree :NERDTreeToggle
+nnoremap :tree :NERDTreeTabsToggle
 
 nnoremap :re :WinResizerStartResize
 let g:winresizer_start_key = '<C-C>'
@@ -239,7 +241,7 @@ au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
 " unite-tagsの設定
 autocmd BufEnter *
 \   if empty(&buftype)
-\|      nnoremap <buffer> <C-]> :<C-u>UniteWithCursorWord -immediately tag<CR>
+\|      nnoremap <buffer> <C-@> :<C-u>UniteWithCursorWord -immediately tag<CR>
 \|  endif
 
 noremap :rc :<C-u>Unite rails/controller<CR>
@@ -262,6 +264,17 @@ let g:user_emmet_settings = {
 \  'indentation':'  '
 \}
 " ===============================================================
+
+
+" ==============================================================
+" タブ移動関連
+nnoremap [TABCMD]  <nop>
+nmap     <leader>t [TABCMD]
+
+nnoremap <silent> <TAB>f :tabn 1<CR>
+nnoremap <silent> ) :tabn<cr>
+nnoremap <silent> ( :tabN<cr>
+" ==============================================================
 
 :set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
 
