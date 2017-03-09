@@ -13,6 +13,9 @@ set ignorecase
 set smartcase
 set wrapscan
 set matchpairs+=<:>
+set iskeyword+=-
+set iskeyword-=_
+
 
 set wildmenu wildmode=list:full
 set clipboard+=unnamed,autoselect
@@ -74,6 +77,8 @@ NeoBundle 'tpope/vim-fugitive' " vimでgitコマンドが使える
 NeoBundle 'scrooloose/syntastic.git' " 文法チェック
 NeoBundle 'simeji/winresizer'
 NeoBundle 'TwitVim'
+NeoBundle 'AtsushiM/sass-compile.vim.git'
+NeoBundle 'AtsushiM/search-parent.vim'
 
 " NeoBundle 'NigoroJr/rsense'
 " NeoBundle 'marcus/rsense'
@@ -233,6 +238,8 @@ noremap <C-U><C-Y> :Unite history/yank<CR>
 
 au FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('split') " ウィンドウを分割して開く
 au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('split')
+au FileType unite nnoremap <silent> <buffer> <expr> <C-t> unite#do_action('tabopen')
+au FileType unite inoremap <silent> <buffer> <expr> <C-t> unite#do_action('tabopen')
 
 " ESCキーを2回押すと終了する
 au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
@@ -255,6 +262,13 @@ noremap :rg :<C-u>Unite rails/gemfile<CR>
 noremap :rt :<C-u>Unite rails/spec<CR>
 
 noremap :ss :SimpleSearch 
+
+let g:sass_compile_auto = 1
+let g:sass_compile_cdloop = 5
+let g:sass_compile_cssdir = ['css', 'stylesheet']
+let g:sass_compile_file = ['scss', 'sass']
+let g:sass_compile_beforecmd = ''
+let g:sass_compile_aftercmd = 'ccl'
 
 " ===============================================================
 "
