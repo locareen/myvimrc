@@ -13,9 +13,6 @@ set ignorecase
 set smartcase
 set wrapscan
 set matchpairs+=<:>
-set iskeyword+=-
-set iskeyword-=_
-
 
 set wildmenu wildmode=list:full
 set clipboard+=unnamed,autoselect
@@ -75,10 +72,15 @@ NeoBundle 'slim-template/vim-slim' " slimのシンタックスハイライト
 NeoBundle 'taglist.vim' " ctagsのリストが見れる
 NeoBundle 'tpope/vim-fugitive' " vimでgitコマンドが使える
 NeoBundle 'scrooloose/syntastic.git' " 文法チェック
+NeoBundle 'Townk/vim-autoclose' " 閉じ括弧やクォートを補完
+NeoBundle "ctrlpvim/ctrlp.vim"  " ファイル名で検索
 NeoBundle 'simeji/winresizer'
 NeoBundle 'TwitVim'
 NeoBundle 'AtsushiM/sass-compile.vim.git'
 NeoBundle 'AtsushiM/search-parent.vim'
+NeoBundle 'posva/vim-vue'
+NeoBundle 'kmnk/vim-unite-giti.git' " vimでgit
+NeoBundle 'editorconfig/editorconfig-vim'
 
 " NeoBundle 'NigoroJr/rsense'
 " NeoBundle 'marcus/rsense'
@@ -204,7 +206,7 @@ vnoremap < <gv
 nnoremap :tree :NERDTreeTabsToggle
 
 nnoremap :re :WinResizerStartResize
-let g:winresizer_start_key = '<C-C>'
+let g:winresizer_start_key = '<C-0>'
 
 " 入力モードで行の先頭と最後に移動するショートカット
 imap <C-e> <Esc>$a
@@ -215,6 +217,9 @@ nmap <C-e> <Esc>$a
 " ヤンクレジスタから貼付け
 noremap __ "0p
 noremap x "_x
+
+" カレント列から行末までヤンク
+noremap Y y$
 
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]>
@@ -228,6 +233,9 @@ nnoremap <silent>BP :bprevious<CR>
 nnoremap <silent>BN :bnext<CR>
 nnoremap <silent>BB :b#<CR>
 
+" 括弧間移動
+nnoremap @ %
+
 " ===============================================================
 " unite.vimの設定
 let g:unite_source_history_yank_enable = 1
@@ -235,6 +243,7 @@ noremap <C-U><C-F> :Unite -buffer-name=file file -start-insert<CR>
 " 最近使ったフィアル一覧
 noremap <C-U><C-R> :Unite file_mru<CR>
 noremap <C-U><C-Y> :Unite history/yank<CR>
+noremap <C-U><C-G> :Unite giti/branch
 
 au FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('split') " ウィンドウを分割して開く
 au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('split')
@@ -302,6 +311,11 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+set iskeyword+=-
+set iskeyword-=_
+
+
 
 "command! -nargs=1 ES call s:EasySearch("<args>")
 "function s:EasySearch(word)
