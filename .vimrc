@@ -81,6 +81,13 @@ NeoBundle 'AtsushiM/search-parent.vim'
 NeoBundle 'posva/vim-vue'
 NeoBundle 'kmnk/vim-unite-giti.git' " vimでgit
 NeoBundle 'editorconfig/editorconfig-vim'
+NeoBundle 'rhysd/vim-textobj-ruby'
+NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'mxw/vim-jsx'
+NeoBundle 'vim-scripts/grep.vim'
+NeoBundle 'fatih/vim-go'
+NeoBundle 'mattn/vim-sqlfmt'
 
 " NeoBundle 'NigoroJr/rsense'
 " NeoBundle 'marcus/rsense'
@@ -98,13 +105,17 @@ colorscheme lucius
 "highlight Pmenu ctermbg=4
 "highlight PmenuSel ctermbg=1
 "highlight PMenuSbar ctermbg=4
-"
+
+
+autocmd BufNewFile *.html 0r $HOME/.vim/template/html.txt
 let twitvim_browser_cmd = 'open' " for Mac
 let twitvim_force_ssl = 1
 let twitvim_count = 40
 
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ['ruby'] }
+let g:syntastic_mode_map = { 'mode': 'passive' }
 let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_ruby_mri_exec = '/Users/kobayashiyoshiki/.rbenv/shims/ruby'
+" let g:syntastic_ruby_rubocop_exec = '/Users/kobayashiyoshiki/.rbenv/shims/.rbenv/shims/rubocop'
 
 " 補完ウィンドウの設定
 set completeopt=menuone
@@ -234,7 +245,7 @@ nnoremap <silent>BN :bnext<CR>
 nnoremap <silent>BB :b#<CR>
 
 " 括弧間移動
-nnoremap @ %
+" nnoremap @ %
 
 " ===============================================================
 " unite.vimの設定
@@ -314,7 +325,10 @@ let g:syntastic_check_on_wq = 0
 
 set iskeyword+=-
 set iskeyword-=_
+noremap __  :set iskeyword-=_<CR>
+noremap ___ :set iskeyword+=_<CR>
 
+let g:go_version_warning = 0
 
 
 "command! -nargs=1 ES call s:EasySearch("<args>")
