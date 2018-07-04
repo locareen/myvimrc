@@ -72,6 +72,7 @@ NeoBundle 'slim-template/vim-slim' " slimのシンタックスハイライト
 NeoBundle 'taglist.vim' " ctagsのリストが見れる
 NeoBundle 'tpope/vim-fugitive' " vimでgitコマンドが使える
 NeoBundle 'scrooloose/syntastic.git' " 文法チェック
+NeoBundle 'w0rp/ale'                 " 文法チェック
 NeoBundle 'Townk/vim-autoclose' " 閉じ括弧やクォートを補完
 NeoBundle "ctrlpvim/ctrlp.vim"  " ファイル名で検索
 NeoBundle 'simeji/winresizer'
@@ -112,10 +113,10 @@ let twitvim_browser_cmd = 'open' " for Mac
 let twitvim_force_ssl = 1
 let twitvim_count = 40
 
-let g:syntastic_mode_map = { 'mode': 'passive' }
-let g:syntastic_ruby_checkers = ['rubocop']
-let g:syntastic_ruby_mri_exec = '/Users/kobayashiyoshiki/.rbenv/shims/ruby'
-" let g:syntastic_ruby_rubocop_exec = '/Users/kobayashiyoshiki/.rbenv/shims/.rbenv/shims/rubocop'
+"let g:syntastic_mode_map = { 'mode':'passive', 'active_filetypes': ['ruby'] }
+"let g:syntastic_ruby_checkers = ['rubocop']
+"let g:syntastic_ruby_mri_exec = '/Users/kobayashiyoshiki/.rbenv/shims/ruby'
+"let g:syntastic_ruby_rubocop_exec = '/Users/kobayashiyoshiki/.rbenv/shims/rubocop'
 
 " 補完ウィンドウの設定
 set completeopt=menuone
@@ -318,10 +319,10 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 
 set iskeyword+=-
 set iskeyword-=_
@@ -329,6 +330,13 @@ noremap __  :set iskeyword-=_<CR>
 noremap ___ :set iskeyword+=_<CR>
 
 let g:go_version_warning = 0
+
+" ALE設定
+let g:ale_emit_conflict_warnings = 0 " syntasticとのconflict対策
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
+" let g:ale_lint_on_enter = 0 " ファイルオープン時にチェックしない
+" let g:ale_ruby_rubocop_executable = "~/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/rubocop-0.51.0/bin/rubocop"
 
 
 "command! -nargs=1 ES call s:EasySearch("<args>")
