@@ -1,5 +1,6 @@
 let g:hybrid_use_Xresources = 1
 syntax on
+let mapleader = ","
 
 " set encoding=utf-8
 " set fileencodings=euc-jp
@@ -13,6 +14,7 @@ set ignorecase
 set smartcase
 set wrapscan
 set matchpairs+=<:>
+set backspace=indent,eol,start
 
 set wildmenu wildmode=list:full
 set clipboard+=unnamed,autoselect
@@ -62,6 +64,7 @@ NeoBundle 'basyura/unite-rails'  " uniteでrailsプロジェクトのファイ�
 NeoBundle "tsukkee/unite-tag"    " ctgasの内容をunite.vimを使って開く
 NeoBundle 'Shougo/neomru.vim'    " unite.vimで最近使ったファイルを開くのに必要
 NeoBundle 'Shougo/neoyank.vim'   " unite.vimでヤンク履歴を表示する
+NeoBundle 'Shougo/denite.nvim'
 NeoBundle 'tpope/vim-endwise'    " Ruby向けにendを自動挿入
 NeoBundle 'soramugi/auto-ctags.vim' " ctagsを使ったタグの自動生成
 NeoBundle 'mattn/emmet-vim'  " html/cssの入力補助
@@ -87,8 +90,10 @@ NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'mxw/vim-jsx'
 NeoBundle 'vim-scripts/grep.vim'
+NeoBundle 'mileszs/ack.vim'
 NeoBundle 'fatih/vim-go'
 NeoBundle 'mattn/vim-sqlfmt'
+NeoBundle 'terryma/vim-multiple-cursors'
 
 " NeoBundle 'NigoroJr/rsense'
 " NeoBundle 'marcus/rsense'
@@ -101,6 +106,7 @@ call neobundle#end()
 filetype plugin on
 
 colorscheme lucius
+let g:lucius_style = "light"
 
 "autocmd FileType php :set dictionary=~/.vim/dict/php.dict
 "highlight Pmenu ctermbg=4
@@ -227,7 +233,7 @@ nmap <C-e> <Esc>$a
 " noremap <C-a> <Esc>^a
 
 " ヤンクレジスタから貼付け
-noremap __ "0p
+noremap 0p "0p
 noremap x "_x
 
 " カレント列から行末までヤンク
@@ -235,8 +241,8 @@ noremap Y y$
 
 " tagsジャンプの時に複数ある時は一覧表示
 nnoremap <C-]> g<C-]>
-nnoremap <C-{> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
-nnoremap <C-}> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
+nnoremap <C-k> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
 
 nnoremap TT :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR>
 
@@ -256,6 +262,7 @@ noremap <C-U><C-F> :Unite -buffer-name=file file -start-insert<CR>
 noremap <C-U><C-R> :Unite file_mru<CR>
 noremap <C-U><C-Y> :Unite history/yank<CR>
 noremap <C-U><C-G> :Unite giti/branch
+
 
 au FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('split') " ウィンドウを分割して開く
 au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('split')
@@ -282,7 +289,18 @@ noremap :rr :<C-u>Unite rails/route<CR>
 noremap :rg :<C-u>Unite rails/gemfile<CR>
 noremap :rt :<C-u>Unite rails/spec<CR>
 
-noremap :ss :SimpleSearch 
+" denite.vimの設定
+nnoremap <Leader>p :Denite buffer file_rec<CR>
+nnoremap <Leader>b :Denite buffer<CR>
+nnoremap <Leader>f :Denite file_rec<CR>
+nnoremap <Leader>g :DeniteCursorWord grep<CR>
+
+call denite#custom#map('insert', '<C-t>', '<denite:do_action:tabopen>')
+call denite#custom#map('insert', '<C-v>', '<denite:do_action:vsplit>')
+call denite#custom#map('insert', '<C-i>', '<denite:do_action:split>')
+
+call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>')
+call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>')
 
 let g:sass_compile_auto = 1
 let g:sass_compile_cdloop = 5
@@ -290,6 +308,8 @@ let g:sass_compile_cssdir = ['css', 'stylesheet']
 let g:sass_compile_file = ['scss', 'sass']
 let g:sass_compile_beforecmd = ''
 let g:sass_compile_aftercmd = 'ccl'
+
+let g:ackprg = 'ag --nogroup --nocolor --column'
 
 " ===============================================================
 "
@@ -337,6 +357,9 @@ nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " let g:ale_lint_on_enter = 0 " ファイルオープン時にチェックしない
 " let g:ale_ruby_rubocop_executable = "~/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/rubocop-0.51.0/bin/rubocop"
+
+
+command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 
 
 "command! -nargs=1 ES call s:EasySearch("<args>")
