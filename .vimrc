@@ -72,6 +72,7 @@ NeoBundle 'othree/html5.vim' " html5のシンタックスカラーon
 NeoBundle 'kchmck/vim-coffee-script' " coffee scriptのシンタックスカラーon
 NeoBundle 'osyo-manga/vim-over' " ハイライト一括置換的なやつ
 NeoBundle 'slim-template/vim-slim' " slimのシンタックスハイライト
+NeoBundle 'jwalton512/vim-blade' " bladのシンタックスハイライト
 NeoBundle 'taglist.vim' " ctagsのリストが見れる
 NeoBundle 'tpope/vim-fugitive' " vimでgitコマンドが使える
 NeoBundle 'scrooloose/syntastic.git' " 文法チェック
@@ -94,6 +95,7 @@ NeoBundle 'mileszs/ack.vim'
 NeoBundle 'fatih/vim-go'
 NeoBundle 'mattn/vim-sqlfmt'
 NeoBundle 'terryma/vim-multiple-cursors'
+NeoBundle 'leafgarland/typescript-vim'
 
 " NeoBundle 'NigoroJr/rsense'
 " NeoBundle 'marcus/rsense'
@@ -113,6 +115,7 @@ let g:lucius_style = "light"
 "highlight PmenuSel ctermbg=1
 "highlight PMenuSbar ctermbg=4
 
+autocmd BufRead,BufNewFile *.ts,*.tsx set filetype=typescript
 
 autocmd BufNewFile *.html 0r $HOME/.vim/template/html.txt
 let twitvim_browser_cmd = 'open' " for Mac
@@ -358,6 +361,11 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " let g:ale_lint_on_enter = 0 " ファイルオープン時にチェックしない
 " let g:ale_ruby_rubocop_executable = "~/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/rubocop-0.51.0/bin/rubocop"
 
+" php用設定
+let g:ale_linters = { 'php': ['phpcs', 'php'] }
+let g:ale_php_phpcs_executable = '/Users/kobayashiyoshiki/projects/kekkon-kuraveil/vendor/bin/phpcs'
+let g:ale_php_phpcs_use_global = 1
+let g:ale_php_phpcs_standard= 'ruleset.xml'
 
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
 
