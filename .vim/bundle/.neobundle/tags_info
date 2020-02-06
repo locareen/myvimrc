@@ -1,0 +1,13 @@
+ag.vim
+ctrlp-funky
+ctrlp.vim
+indentLine
+lightline.vim
+neobundle.vim
+neocomplete.vim
+neosnippet
+neosnippet-snippets
+syntastic
+syntastic-local-eslint.vim
+vim-ctrlp-commandline
+vim-trailing-whitespace

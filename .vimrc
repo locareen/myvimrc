@@ -1,383 +1,223 @@
-let g:hybrid_use_Xresources = 1
-syntax on
-let mapleader = ","
+set encoding=utf-8
+scriptencoding utf-8
+" ↑1行目は読み込み時の文字コードの設定
+" ↑2行目はVim Script内でマルチバイトを使う場合の設定
+" Vim scritptにvimrcも含まれるので、日本語でコメントを書く場合は先頭にこの設定が必要になる
 
-" set encoding=utf-8
-" set fileencodings=euc-jp
-set hlsearch
-set ruler
-set noswapfile
-set title
-set incsearch
-set autoread
-set ignorecase
-set smartcase
-set wrapscan
-set matchpairs+=<:>
-set backspace=indent,eol,start
-
-set wildmenu wildmode=list:full
-set clipboard+=unnamed,autoselect
-
+"----------------------------------------------------------
+" NeoBundle
+"----------------------------------------------------------
 if has('vim_starting')
-   set nocompatible      " Be iMproved
+    " 初回起動時のみruntimepathにNeoBundleのパスを指定する
+    set runtimepath+=~/.vim/bundle/neobundle.vim/
 
-   "Required:
-   set runtimepath+=~/.vim/bundle/neobundle.vim/
+    " NeoBundleが未インストールであればgit cloneする
+    if !isdirectory(expand("~/.vim/bundle/neobundle.vim/"))
+        echo "install NeoBundle..."
+        :call system("git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim")
+    endif
 endif
 
-if !exists('loaded_matchit')
-  " matchitを有効化
-  " def〜end間を%で移動できる
-  runtime macros/matchit.vim
-endif
-
-" オートインデント設定
-:set tabstop=2
-:set autoindent
-:set expandtab
-:set shiftwidth=2
-
-set whichwrap=b,s,<,>,[,]
-
-"Required:
 call neobundle#begin(expand('~/.vim/bundle/'))
 
-" Let NeoBundle manage NeoBundle
-" Required:
+" インストールするVimプラグインを以下に記述
+" NeoBundle自身を管理
 NeoBundleFetch 'Shougo/neobundle.vim'
+" ステータスラインの表示内容強化
+NeoBundle 'itchyny/lightline.vim'
+" インデントの可視化
+NeoBundle 'Yggdroot/indentLine'
+" 末尾の全角半角空白文字を赤くハイライト
+NeoBundle 'bronson/vim-trailing-whitespace'
+" 構文エラーチェック
+NeoBundle 'scrooloose/syntastic'
+" 多機能セレクタ
+NeoBundle 'ctrlpvim/ctrlp.vim'
+" CtrlPの拡張プラグイン. 関数検索
+NeoBundle 'tacahiroy/ctrlp-funky'
+" CtrlPの拡張プラグイン. コマンド履歴検索
+NeoBundle 'suy/vim-ctrlp-commandline'
+" CtrlPの検索にagを使う
+NeoBundle 'rking/ag.vim'
+" プロジェクトに入ってるESLintを読み込む
+NeoBundle 'pmsorhaindo/syntastic-local-eslint.vim'
 
-" ==========================================
-"My Bundles Plugin
-"
-NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'w0ng/vim-hybrid'
-
-NeoBundle 'ykyk1218/vim-simple-search'
-
-NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'nelstrom/vim-visual-star-search' " ビジュアルモードで選択した範囲を*で検索できるようにする
-NeoBundle 'scrooloose/nerdtree'  " ディレクトリをツリー表示できる
-NeoBundle 'jistr/vim-nerdtree-tabs' " nerdtreeを全てのタブで同じものを使えるようになる
-NeoBundle 'Shougo/unite.vim'     " ファイルを開くのが便利になる
-NeoBundle 'basyura/unite-rails'  " uniteでrailsプロジェクトのファイル移動
-NeoBundle "tsukkee/unite-tag"    " ctgasの内容をunite.vimを使って開く
-NeoBundle 'Shougo/neomru.vim'    " unite.vimで最近使ったファイルを開くのに必要
-NeoBundle 'Shougo/neoyank.vim'   " unite.vimでヤンク履歴を表示する
-NeoBundle 'Shougo/denite.nvim'
-NeoBundle 'tpope/vim-endwise'    " Ruby向けにendを自動挿入
-NeoBundle 'soramugi/auto-ctags.vim' " ctagsを使ったタグの自動生成
-NeoBundle 'mattn/emmet-vim'  " html/cssの入力補助
-NeoBundle 'othree/html5.vim' " html5のシンタックスカラーon
-NeoBundle 'kchmck/vim-coffee-script' " coffee scriptのシンタックスカラーon
-NeoBundle 'osyo-manga/vim-over' " ハイライト一括置換的なやつ
-NeoBundle 'slim-template/vim-slim' " slimのシンタックスハイライト
-NeoBundle 'jwalton512/vim-blade' " bladのシンタックスハイライト
-NeoBundle 'taglist.vim' " ctagsのリストが見れる
-NeoBundle 'tpope/vim-fugitive' " vimでgitコマンドが使える
-NeoBundle 'scrooloose/syntastic.git' " 文法チェック
-NeoBundle 'w0rp/ale'                 " 文法チェック
-NeoBundle 'Townk/vim-autoclose' " 閉じ括弧やクォートを補完
-NeoBundle "ctrlpvim/ctrlp.vim"  " ファイル名で検索
-NeoBundle 'simeji/winresizer'
-NeoBundle 'TwitVim'
-NeoBundle 'AtsushiM/sass-compile.vim.git'
-NeoBundle 'AtsushiM/search-parent.vim'
-NeoBundle 'posva/vim-vue'
-NeoBundle 'kmnk/vim-unite-giti.git' " vimでgit
-NeoBundle 'editorconfig/editorconfig-vim'
-NeoBundle 'rhysd/vim-textobj-ruby'
-NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'mxw/vim-jsx'
-NeoBundle 'vim-scripts/grep.vim'
-NeoBundle 'mileszs/ack.vim'
-NeoBundle 'fatih/vim-go'
-NeoBundle 'mattn/vim-sqlfmt'
-NeoBundle 'terryma/vim-multiple-cursors'
-NeoBundle 'leafgarland/typescript-vim'
-
-" NeoBundle 'NigoroJr/rsense'
-" NeoBundle 'marcus/rsense'
-" NeoBundle 'supermomonga/neocompletecache-rsense.vim' " , {
-"    \ 'autoload' : { 'insert' : 1, 'filetype' : 'ruby', } }
-" =========================================
+" vimのlua機能が使える時だけ以下のVimプラグインをインストールする
+if has('lua')
+    " コードの自動補完
+    NeoBundle 'Shougo/neocomplete.vim'
+    " スニペットの補完機能
+    NeoBundle "Shougo/neosnippet"
+    " スニペット集
+    NeoBundle 'Shougo/neosnippet-snippets'
+endif
 
 call neobundle#end()
-" Required:
-filetype plugin on
 
-colorscheme lucius
-let g:lucius_style = "light"
+" ファイルタイプ別のVimプラグイン/インデントを有効にする
+filetype plugin indent on
 
-"autocmd FileType php :set dictionary=~/.vim/dict/php.dict
-"highlight Pmenu ctermbg=4
-"highlight PmenuSel ctermbg=1
-"highlight PMenuSbar ctermbg=4
+" 未インストールのVimプラグインがある場合、インストールするかどうかを尋ねてくれるようにする設定
+NeoBundleCheck
 
-autocmd BufRead,BufNewFile *.ts,*.tsx set filetype=typescript
+set t_Co=256 " iTerm2など既に256色環境なら無くても良い
+syntax enable " 構文に色を付ける
 
-autocmd BufNewFile *.html 0r $HOME/.vim/template/html.txt
-let twitvim_browser_cmd = 'open' " for Mac
-let twitvim_force_ssl = 1
-let twitvim_count = 40
+"----------------------------------------------------------
+" 文字
+"----------------------------------------------------------
+set fileencoding=utf-8 " 保存時の文字コード
+set fileencodings=utf-8,ucs-boms,euc-jp,cp932 " 読み込み時の文字コードの自動判別. 左側が優先される
+set fileformats=unix,dos,mac " 改行コードの自動判別. 左側が優先される
+set ambiwidth=double " □や○文字が崩れる問題を解決
 
-"let g:syntastic_mode_map = { 'mode':'passive', 'active_filetypes': ['ruby'] }
-"let g:syntastic_ruby_checkers = ['rubocop']
-"let g:syntastic_ruby_mri_exec = '/Users/kobayashiyoshiki/.rbenv/shims/ruby'
-"let g:syntastic_ruby_rubocop_exec = '/Users/kobayashiyoshiki/.rbenv/shims/rubocop'
+"----------------------------------------------------------
+" ステータスライン
+"----------------------------------------------------------
+set laststatus=2 " ステータスラインを常に表示
+set showmode " 現在のモードを表示
+set showcmd " 打ったコマンドをステータスラインの下に表示
+set ruler " ステータスラインの右側にカーソルの位置を表示する
 
-" 補完ウィンドウの設定
-set completeopt=menuone
+"----------------------------------------------------------
+" コマンドモード
+"----------------------------------------------------------
+set wildmenu " コマンドモードの補完
+set history=5000 " 保存するコマンド履歴の数
 
-" rsenseでの自動補完機能を有効化
-let g:rsenseUseOmniFunc = 1
-" let g:rsenseHome = '/usr/local/lib/rsense-0.3'
+"----------------------------------------------------------
+" タブ・インデント
+"----------------------------------------------------------
+set expandtab " タブ入力を複数の空白入力に置き換える
+set tabstop=4 " 画面上でタブ文字が占める幅
+set softtabstop=4 " 連続した空白に対してタブキーやバックスペースキーでカーソルが動く幅
+set autoindent " 改行時に前の行のインデントを継続する
+set smartindent " 改行時に前の行の構文をチェックし次の行のインデントを増減する
+set shiftwidth=4 " smartindentで増減する幅
 
-" auto-ctagsを使ってファイル保存時にtagsファイルを更新
-" 生成されるファイルがなんかおかしいのでコメントアウト
-" let g:auto_ctags = 1
- 
-" 起動時に有効化
-let g:neocomplcache_enable_at_startup = 1
- 
-" 大文字が入力されるまで大文字小文字の区別を無視する
-let g:neocomplcache_enable_smart_case = 1
- 
-" _(アンダースコア)区切りの補完を有効化
-let g:neocomplcache_enable_underbar_completion = 1
- 
-let g:neocomplcache_enable_camel_case_completion  =  1
+"----------------------------------------------------------
+" 文字列検索
+"----------------------------------------------------------
+set incsearch " インクリメンタルサーチ. １文字入力毎に検索を行う
+set ignorecase " 検索パターンに大文字小文字を区別しない
+set smartcase " 検索パターンに大文字を含んでいたら大文字小文字を区別する
+set hlsearch " 検索結果をハイライト
 
-" 最初の補完候補を選択状態にする
-" let g:neocomplcache_enable_auto_select = 1
- 
-" ポップアップメニューで表示される候補の数
-let g:neocomplcache_max_list = 20
- 
-" シンタックスをキャッシュするときの最小文字長
-let g:neocomplcache_min_syntax_length = 3
+" ESCキー2度押しでハイライトの切り替え
+nnoremap <silent><Esc><Esc> :<C-u>set nohlsearch!<CR>
 
-" 補完の設定
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
+"----------------------------------------------------------
+" カーソル
+"----------------------------------------------------------
+set whichwrap=b,s,h,l,<,>,[,],~ " カーソルの左右移動で行末から次の行の行頭への移動が可能になる
+set number " 行番号を表示
+"set cursorline " カーソルラインをハイライト
+
+" 行が折り返し表示されていた場合、行単位ではなく表示行単位でカーソルを移動する
+nnoremap j gj
+nnoremap k gk
+nnoremap <down> gj
+nnoremap <up> gk
+
+" バックスペースキーの有効化
+set backspace=indent,eol,start
+
+"----------------------------------------------------------
+" カッコ・タグの対応
+"----------------------------------------------------------
+set showmatch " 括弧の対応関係を一瞬表示する
+source $VIMRUNTIME/macros/matchit.vim " Vimの「%」を拡張する
+
+"----------------------------------------------------------
+" マウスでカーソル移動とスクロール
+"----------------------------------------------------------
+if has('mouse')
+    set mouse=a
+    if has('mouse_sgr')
+        set ttymouse=sgr
+    elseif v:version > 703 || v:version is 703 && has('patch632')
+        set ttymouse=sgr
+    else
+        set ttymouse=xterm2
+    endif
 endif
-let g:neocomplete#force_omni_input_patterns.ruby = '[^.*\t]\.\w*\|\h\w*::'
 
+"----------------------------------------------------------
+" クリップボードからのペースト
+"----------------------------------------------------------
+" 挿入モードでクリップボードからペーストする時に自動でインデントさせないようにする
+if &term =~ "xterm"
+    let &t_SI .= "\e[?2004h"
+    let &t_EI .= "\e[?2004l"
+    let &pastetoggle = "\e[201~"
 
-" php用なのでいったん外すディクショナリ定義
-"let g:neocomplcache_dictionary_filetype_lists = {
-"    \ 'default' : '',
-"    \ 'php' : $HOME . '/.vim/dict/php.dict',
-"    \ 'ctp' : $HOME . '/.vim/dict/php.dict'
-"    \ }
- 
-if !exists('g:neocomplcache_keyword_patterns')
-        let g:neocomplcache_keyword_patterns = {}
+    function XTermPasteBegin(ret)
+        set paste
+        return a:ret
+    endfunction
+
+    inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
 endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
- 
-" スニペットを展開する。スニペットが関係しないところでは行末まで削除
-imap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
-smap <expr><C-k> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : "\<C-o>D"
- 
-" 前回行われた補完をキャンセルします
-inoremap <expr><C-g> neocomplcache#undo_completion()
- 
-" 補完候補のなかから、共通する部分を補完します
-inoremap <expr><C-l> neocomplcache#complete_common_string()
- 
-" 改行で補完ウィンドウを閉じる
-" inoremap <expr><CR> neocomplcache#smart_close_popup() . "\<CR>"
- 
-"tabで補完候補の選択を行う
-inoremap <expr><TAB> pumvisible() ? "\<Down>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<Up>" : "\<S-TAB>"
- 
-" <C-h>や<BS>を押したときに確実にポップアップを削除します
-inoremap <expr><C-h> neocomplcache#smart_close_popup().”\<C-h>”
- 
-" 現在選択している候補を確定します
-inoremap <expr><C-y> neocomplcache#close_popup()
-" inoremap <expr><C-CR> neocomplcache#close_popup()
- 
-" 現在選択している候補をキャンセルし、ポップアップを閉じます
-inoremap <expr><C-e> neocomplcache#cancel_popup()
 
-augroup MyXML
-  autocmd!
-  autocmd Filetype xml inoremap <buffer> </ </<C-x><C-o>
-  autocmd Filetype html inoremap <buffer> </ </<C-x><C-o>
-augroup END
+"----------------------------------------------------------
+" neocomplete・neosnippetの設定
+"----------------------------------------------------------
+if neobundle#is_installed('neocomplete.vim')
+    " Vim起動時にneocompleteを有効にする
+    let g:neocomplete#enable_at_startup = 1
+    " smartcase有効化. 大文字が入力されるまで大文字小文字の区別を無視する
+    let g:neocomplete#enable_smart_case = 1
+    " 3文字以上の単語に対して補完を有効にする
+    let g:neocomplete#min_keyword_length = 3
+    " 区切り文字まで補完する
+    let g:neocomplete#enable_auto_delimiter = 1
+    " 1文字目の入力から補完のポップアップを表示
+    let g:neocomplete#auto_completion_start_length = 1
+    " バックスペースで補完のポップアップを閉じる
+    inoremap <expr><BS> neocomplete#smart_close_popup()."<C-h>"
 
-" 括弧の保管
-inoremap {<Enter> {}<Left><CR><ESC><S-o>
-inoremap [<Enter> []<Left><CR><ESC><S-o>
-inoremap (<Enter> ()<Left><CR><ESC><S-o>
+    " エンターキーで補完候補の確定. スニペットの展開もエンターキーで確定
+    imap <expr><CR> neosnippet#expandable() ? "<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "<C-y>" : "<CR>"
+    " タブキーで補完候補の選択. スニペット内のジャンプもタブキーでジャンプ
+    imap <expr><TAB> pumvisible() ? "<C-n>" : neosnippet#jumpable() ? "<Plug>(neosnippet_expand_or_jump)" : "<TAB>"
+endif
 
-" コマンドモードで現在開いているファイルのパスを「%%」で表示
-cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h') . '/' : '%%'
+"----------------------------------------------------------
+" Syntastic
+"----------------------------------------------------------
+" 構文エラー行に「>>」を表示
+let g:syntastic_enable_signs = 1
+" 他のVimプラグインと競合するのを防ぐ
+let g:syntastic_always_populate_loc_list = 1
+" 構文エラーリストを非表示
+let g:syntastic_auto_loc_list = 0
+" ファイルを開いた時に構文エラーチェックを実行する
+let g:syntastic_check_on_open = 1
+" 「:wq」で終了する時も構文エラーチェックする
+let g:syntastic_check_on_wq = 1
 
-" 複数行を選択して連続してインデントできるようにする
-vnoremap > >gv
-vnoremap < <gv
+" Javascript用. 構文エラーチェックにESLintを使用
+let g:syntastic_javascript_checkers=['eslint']
+" Javascript以外は構文エラーチェックをしない
+let g:syntastic_mode_map = { 'mode': 'passive',
+                           \ 'active_filetypes': ['javascript'],
+                           \ 'passive_filetypes': [] }
 
-" NERDTreeを開く
-nnoremap :tree :NERDTreeTabsToggle
+"----------------------------------------------------------
+" CtrlP
+"----------------------------------------------------------
+let g:ctrlp_match_window = 'order:ttb,min:20,max:20,results:100' " マッチウインドウの設定. 「下部に表示, 大きさ20行で固定, 検索結果100件」
+let g:ctrlp_show_hidden = 1 " .(ドット)から始まるファイルも検索対象にする
+let g:ctrlp_types = ['fil'] "ファイル検索のみ使用
+let g:ctrlp_extensions = ['funky', 'commandline'] " CtrlPの拡張として「funky」と「commandline」を使用
 
-nnoremap :re :WinResizerStartResize
-let g:winresizer_start_key = '<C-0>'
+" CtrlPCommandLineの有効化
+command! CtrlPCommandLine call ctrlp#init(ctrlp#commandline#id())
 
-" 入力モードで行の先頭と最後に移動するショートカット
-imap <C-e> <Esc>$a
-" inoremap <C-a> <Esc>^a
-nmap <C-e> <Esc>$a
-" noremap <C-a> <Esc>^a
+" CtrlPFunkyの絞り込み検索設定
+let g:ctrlp_funky_matchtype = 'path'
 
-" ヤンクレジスタから貼付け
-noremap 0p "0p
-noremap x "_x
-
-" カレント列から行末までヤンク
-noremap Y y$
-
-" tagsジャンプの時に複数ある時は一覧表示
-nnoremap <C-]> g<C-]>
-nnoremap <C-h> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
-nnoremap <C-k> :split<CR> :exe("tjump ".expand('<cword>'))<CR>
-
-nnoremap TT :<C-u>tab stj <C-R>=expand('<cword>')<CR><CR>
-
-" バッファ移動
-nnoremap <silent>BP :bprevious<CR>
-nnoremap <silent>BN :bnext<CR>
-nnoremap <silent>BB :b#<CR>
-
-" 括弧間移動
-" nnoremap @ %
-
-" ===============================================================
-" unite.vimの設定
-let g:unite_source_history_yank_enable = 1
-noremap <C-U><C-F> :Unite -buffer-name=file file -start-insert<CR>
-" 最近使ったフィアル一覧
-noremap <C-U><C-R> :Unite file_mru<CR>
-noremap <C-U><C-Y> :Unite history/yank<CR>
-noremap <C-U><C-G> :Unite giti/branch
-
-
-au FileType unite nnoremap <silent> <buffer> <expr> <C-i> unite#do_action('split') " ウィンドウを分割して開く
-au FileType unite inoremap <silent> <buffer> <expr> <C-i> unite#do_action('split')
-au FileType unite nnoremap <silent> <buffer> <expr> <C-t> unite#do_action('tabopen')
-au FileType unite inoremap <silent> <buffer> <expr> <C-t> unite#do_action('tabopen')
-
-" ESCキーを2回押すと終了する
-au FileType unite nnoremap <silent> <buffer> <ESC><ESC> q
-au FileType unite inoremap <silent> <buffer> <ESC><ESC> <ESC>q
-
-" unite-tagsの設定
-autocmd BufEnter *
-\   if empty(&buftype)
-\|      nnoremap <buffer> <C-@> :<C-u>UniteWithCursorWord -immediately tag<CR>
-\|  endif
-
-noremap :rc :<C-u>Unite rails/controller<CR>
-noremap :rm :<C-u>Unite rails/model<CR>
-noremap :rv :<C-u>Unite rails/view<CR>
-noremap :rh :<C-u>Unite rails/helper<CR>
-noremap :rs :<C-u>Unite rails/stylesheet<CR>
-noremap :rj :<C-u>Unite rails/javascript<CR>
-noremap :rr :<C-u>Unite rails/route<CR>
-noremap :rg :<C-u>Unite rails/gemfile<CR>
-noremap :rt :<C-u>Unite rails/spec<CR>
-
-" denite.vimの設定
-nnoremap <Leader>p :Denite buffer file_rec<CR>
-nnoremap <Leader>b :Denite buffer<CR>
-nnoremap <Leader>f :Denite file_rec<CR>
-nnoremap <Leader>g :DeniteCursorWord grep<CR>
-
-call denite#custom#map('insert', '<C-t>', '<denite:do_action:tabopen>')
-call denite#custom#map('insert', '<C-v>', '<denite:do_action:vsplit>')
-call denite#custom#map('insert', '<C-i>', '<denite:do_action:split>')
-
-call denite#custom#map('insert', '<C-j>', '<denite:move_to_next_line>')
-call denite#custom#map('insert', '<C-k>', '<denite:move_to_previous_line>')
-
-let g:sass_compile_auto = 1
-let g:sass_compile_cdloop = 5
-let g:sass_compile_cssdir = ['css', 'stylesheet']
-let g:sass_compile_file = ['scss', 'sass']
-let g:sass_compile_beforecmd = ''
-let g:sass_compile_aftercmd = 'ccl'
-
-let g:ackprg = 'ag --nogroup --nocolor --column'
-
-" ===============================================================
-"
-" emmetの設定
-let g:user_emmet_expandabbr_key = '<C-y><C-y>'
-let g:user_emmet_settings = {
-\  'indentation':'  '
-\}
-" ===============================================================
-
-
-" ==============================================================
-" タブ移動関連
-nnoremap [TABCMD]  <nop>
-nmap     <leader>t [TABCMD]
-
-nnoremap <silent> <TAB>f :tabn 1<CR>
-nnoremap <silent> ) :tabn<cr>
-nnoremap <silent> ( :tabN<cr>
-" ==============================================================
-
-:set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [ASCII=\%03.3b]\ [HEX=\%02.2B]\ [POS=%04l,%04v][%p%%]\ [LEN=%L]
-
-execute pathogen#infect()
-
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-
-set iskeyword+=-
-set iskeyword-=_
-noremap __  :set iskeyword-=_<CR>
-noremap ___ :set iskeyword+=_<CR>
-
-let g:go_version_warning = 0
-
-" ALE設定
-let g:ale_emit_conflict_warnings = 0 " syntasticとのconflict対策
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-" let g:ale_lint_on_enter = 0 " ファイルオープン時にチェックしない
-" let g:ale_ruby_rubocop_executable = "~/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/rubocop-0.51.0/bin/rubocop"
-
-" php用設定
-let g:ale_linters = { 'php': ['phpcs', 'php'] }
-let g:ale_php_phpcs_executable = '/Users/kobayashiyoshiki/projects/kekkon-kuraveil/vendor/bin/phpcs'
-let g:ale_php_phpcs_use_global = 1
-let g:ale_php_phpcs_standard= 'ruleset.xml'
-
-command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis | wincmd p | diffthis
-
-
-"command! -nargs=1 ES call s:EasySearch("<args>")
-"function s:EasySearch(word)
-"  let s:filelist = glob("./**/". a:word . "*")
-"  let s:splitted = split(s:filelist, "\n")
-"  let s:result = []
-"  new
-"  for s:file in s:splitted
-"    call append('.', s:file . "\r")
-"  endfor
-"  nnoremap <silent> <buffer> <C-i> <C-w>f<C-w>p:q!<CR><C-w>w
-"endfunction
+if executable('ag')
+  let g:ctrlp_use_caching=0 " CtrlPのキャッシュを使わない
+  let g:ctrlp_user_command='ag %s -i --hidden -g ""' " 「ag」の検索設定
+endif
