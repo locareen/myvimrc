@@ -42,6 +42,7 @@ NeoBundle 'rking/ag.vim'
 " プロジェクトに入ってるESLintを読み込む
 NeoBundle 'pmsorhaindo/syntastic-local-eslint.vim'
 
+NeoBundle 'sjl/badwolf'
 " vimのlua機能が使える時だけ以下のVimプラグインをインストールする
 if has('lua')
     " コードの自動補完
@@ -221,3 +222,19 @@ if executable('ag')
   let g:ctrlp_use_caching=0 " CtrlPのキャッシュを使わない
   let g:ctrlp_user_command='ag %s -i --hidden -g ""' " 「ag」の検索設定
 endif
+
+colorscheme molokai
+"highlight Normal ctermbg=none
+"
+"" color scheme
+
+" ------------------------------------
+" colorscheme
+" ------------------------------------
+syntax on
+"colorscheme badwolf
+colorscheme koehler
+"colorscheme shirotelin
+
+highlight Normal ctermbg=none
+
