@@ -53,6 +53,9 @@ if has('lua')
     NeoBundle 'Shougo/neosnippet-snippets'
 endif
 
+" カラースキーム
+NeoBundle 'tomasr/molokai'
+
 call neobundle#end()
 
 " ファイルタイプ別のVimプラグイン/インデントを有効にする
